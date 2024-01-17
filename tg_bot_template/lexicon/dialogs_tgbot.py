@@ -7,8 +7,8 @@ DIALOG: Dict[str, str] = {}
 # Dictionary for dialogs in rus
 DIALOG_RU: Dict[str, str] ={
         'intro': 'Здравствуйте! Я - Headache-checker Bot. Каждый день я буду отправлять вам опрос, \
-            который поможет оценить как часто у вас болит голова и что на это влияет.\n\n '
-            'Давайте начнем. От 0 до 5, где 0 - это отсутствие симптомов, \
+            который поможет оценить как часто у вас болит голова и что на это влияет.',
+        'lvl': 'От 0 до 5, где 0 - это отсутствие симптомов, \
               а 5 - непереносимая боль, оцените уровень вашей головной боли сегодня.',
         'localisation': 'Ок. Посмотрите на картинки и выберите номер от 1-6, соответстующий локализации вашей боли.',
         'lr': 'С какой стороны вы чувствуете боль?',
@@ -44,8 +44,8 @@ DIALOG_RU: Dict[str, str] ={
 
 DIALOG_EN: Dict[str, str] ={
         'intro': 'Hello! This is the Headache-checker Bot. Everyday I will send you a survey that \
-            will help to estimate how often you have a headache and what affects it. '
-           'Let\'s start. From 0 to 5, where 0 - is absence of headache symptomes \
+            will help to estimate how often you have a headache and what affects it. ',
+        'lvl': ' From 0 to 5, where 0 - is absence of headache symptomes \
               and 5 is unsupportable pain, estimate the level of your headache today.',
         'localisation': 'Ok. What is localisation of your headache? Choose from 1 to 6 based on the picture',
         'lr': 'which side of the head is acking?',
@@ -77,8 +77,8 @@ DIALOG_EN: Dict[str, str] ={
 
 DIALOG_FR: Dict[str,str] = {
         'intro': 'Bonjour! Je suis le Headache-checker Bot. Chaque jour je vous enverrai un questionnaire, \
-            qui vais aider à évaluer la frequance de vos maux de tête.'
-           'Commençons! De 0 à 5, évaluez le niveau de votre mal de tête aujourd\'hui, \
+            qui vais aider à évaluer la frequance de vos maux de tête.',
+        'lvl': 'De 0 à 5, évaluez le niveau de votre mal de tête aujourd\'hui, \
             0 - aucune douleur, 5 - douleur insupportable.',
         'localisation': 'D\'accord. Regardez les images et choisissez le numéro qui correspond à la localisation de votre douleur.',
         'lr': 'Quelle cote de tet est plus mal?',

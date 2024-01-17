@@ -5,6 +5,9 @@ LEXICON: Dict[str, str] = {}
 
 LEXICON_EN: Dict[str, str] = {
     '/help': 'Just type /start',
+    '/abort': 'You cancelled your headache-check for today, see you tomorrow!',
+    'begin': 'Let\'s start!',
+    'stop': 'Not today!',
     'yes': 'Yes',
     'no': 'No',
     'left': 'Left side',
@@ -16,6 +19,9 @@ LEXICON_EN: Dict[str, str] = {
 
 LEXICON_RU: Dict[str, str] = {
     '/help': 'просто напишите /start',
+    '/abort': 'Вы прервали заполнение анкеты, до свидания!', 
+    'begin': 'Давайте начнем!',
+    'stop': 'Не сегодня!',
     'yes': 'Да',
     'no': 'Нет',   
     'left': 'Левая сторона',
@@ -27,6 +33,9 @@ LEXICON_RU: Dict[str, str] = {
 
 LEXICON_FR: Dict[str, str] = {
     '/help': 'Imprimez /start',
+    '/abort': 'Vous aves arrete votre mal-de-tete check pour aujoutd\'hui. Au revoir!',
+    'begin': 'Allez y!',
+    'stop': 'Prochaine fois!',
     'yes': 'Oui',
     'no': 'Non',
     'left': 'Cote gauche',
