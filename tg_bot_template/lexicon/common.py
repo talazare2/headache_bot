@@ -10,5 +10,7 @@ COMMON: Dict[str, str] = {
     'fr': 'Français',
     'set_ru': 'Выбран русский язык',
     'set_en': 'English was chosen',
-    'set_fr': 'Vous avez sélectionnez français'
+    'set_fr': 'Vous avez sélectionnez français',
+    'yes': '✅️',
+    'no': '❌'
 }

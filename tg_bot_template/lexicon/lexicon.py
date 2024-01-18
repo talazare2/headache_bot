@@ -1,7 +1,5 @@
 from typing import Dict
-from lexicon.lang import lang
 
-LEXICON: Dict[str, str] = {}
 
 LEXICON_EN: Dict[str, str] = {
     '/help': 'Just type /start',
@@ -54,9 +52,4 @@ BUTTONS: Dict[str, str] = {
     'btn5': '5',
     'btn6': '6'}
 
-if lang == 'ru':
-    LEXICON = LEXICON_RU
-if lang == 'en':
-    LEXICON = LEXICON_EN
-if lang == 'fr':
-    LEXICON = LEXICON_FR
+LEXICON: Dict[str, dict] = {'ru': LEXICON_RU, 'en': LEXICON_EN, 'fr': LEXICON_FR}

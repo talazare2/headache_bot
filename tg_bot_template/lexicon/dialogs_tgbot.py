@@ -1,15 +1,14 @@
 from typing import Dict
-from lexicon.lang import lang
 
 # Initialize dictionary for DIALOG
-DIALOG: Dict[str, str] = {}
+
 
 # Dictionary for dialogs in rus
 DIALOG_RU: Dict[str, str] ={
-        'intro': 'Здравствуйте! Я - Headache-checker Bot. Каждый день я буду отправлять вам опрос, \
-            который поможет оценить как часто у вас болит голова и что на это влияет.',
-        'lvl': 'От 0 до 5, где 0 - это отсутствие симптомов, \
-              а 5 - непереносимая боль, оцените уровень вашей головной боли сегодня.',
+        'intro': 'Здравствуйте! Я - Headache-checker Bot. Каждый день я буду отправлять вам опрос,'
+        ' который поможет оценить как часто у вас болит голова и что на это влияет.',
+        'lvl': 'От 0 до 5, где 0 - это отсутствие симптомов, '
+        'а 5 - непереносимая боль, оцените уровень вашей головной боли сегодня.',
         'localisation': 'Ок. Посмотрите на картинки и выберите номер от 1-6, соответстующий локализации вашей боли.',
         'lr': 'С какой стороны вы чувствуете боль?',
         'alcohol': 'Употребляли ли вы вчера алкоголь?',
@@ -43,10 +42,10 @@ DIALOG_RU: Dict[str, str] ={
 }
 
 DIALOG_EN: Dict[str, str] ={
-        'intro': 'Hello! This is the Headache-checker Bot. Everyday I will send you a survey that \
-            will help to estimate how often you have a headache and what affects it. ',
-        'lvl': ' From 0 to 5, where 0 - is absence of headache symptomes \
-              and 5 is unsupportable pain, estimate the level of your headache today.',
+        'intro': 'Hello! This is the Headache-checker Bot. Everyday I will send you a survey that'
+                 ' will help to estimate how often you have a headache and what affects it. ',
+        'lvl': 'From 0 to 5, where 0 - is absence of headache symptomes '
+               'and 5 is unsupportable pain, estimate the level of your headache today.',
         'localisation': 'Ok. What is localisation of your headache? Choose from 1 to 6 based on the picture',
         'lr': 'which side of the head is acking?',
         'alcohol': 'Did you drink alcohol yesterday?',
@@ -107,10 +106,5 @@ DIALOG_FR: Dict[str,str] = {
              Toutes les données fournies ne sont disponibles que pour vous et ne peuvent pas être transférées à des tiers.'
 }
 
-# depending on language defined as global in user_handlers choos dictionary
-if lang == 'ru':
-    DIALOG = DIALOG_RU
-if lang == 'en':
-    DIALOG = DIALOG_EN
-if lang == 'fr':
-    DIALOG = DIALOG_FR
+# depending on language defined as global in user_handlers choose dictionary
+DIALOG: Dict[str, dict] = {'ru': DIALOG_RU, 'en': DIALOG_EN, 'fr': DIALOG_FR}
