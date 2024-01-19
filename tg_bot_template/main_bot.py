@@ -27,7 +27,7 @@ async def main():
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher()
 
-    # Register routers
+    # Register router
     dp.include_router(user_handlers.router)
 
     # Skip update, launch polling
