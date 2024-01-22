@@ -14,17 +14,17 @@ DIALOG_RU: Dict[str, str] ={
         'lr': 'С какой стороны вы чувствуете боль?',
         'alcohol': 'Употребляли ли вы вчера алкоголь?',
         'pres_yn': 'Есть ли у вас возможность имерить артериальное давление?',
-        'press_dat': 'Введите результаты измерения. \n\n'
+        'press_dat': 'Введите результаты измерения в формате систолическое/диастолическое (напр. 120/80)\n\n'
                      'Обратите внимания! Техника измерения очень сильно влияет на результат,'
                      'рекомендуем ознакомиться с инструкцией!',
-        'instr': 'Не ешьте и не пейте минимум в течение 30 минут перед процедурой\n'
-                 'Вам не должно хотеться в туалет\n'
-                 'Удобно расположитесь в кресле: спина должна поддерживаться, стопы на полу, '
+        'instr': '✓ Не ешьте и не пейте минимум в течение 30 минут перед процедурой\n'
+                 '✓ Вам не должно хотеться в туалет\n'
+                 '✓ Удобно расположитесь в кресле: спина должна поддерживаться, стопы на полу, '
                  'сидите прямо, не скрещивая конечности\n'
-                 'Рука для измерения должна находиться в расслабленном состоянии на уровне вашей груди.\n'
-                 'Убедитесь, что манжета надета на руку плотно, но не перетягивает руку.\n'
-                 'Манжета надевается на голую кожу, не поверх одежды.\n'
-                 'Не разговаривайте во время процедуры.\n\n'
+                 '✓ Рука для измерения должна находиться в расслабленном состоянии на уровне вашей груди.\n'
+                 '✓ Убедитесь, что манжета надета на руку плотно, но не перетягивает руку.\n'
+                 '✓ Манжета надевается на голую кожу, не поверх одежды.\n'
+                 '✓ Не разговаривайте во время процедуры.\n\n'
                  'Повторите процедуру три раза с интервалом в одну-две минуты.',
         'fever': 'Есть ли у вас повышенная температура?',
         'sleep': 'От 1 до 5 оцените как вы спали сегодня ночью, где 5 - \"Я спал как младенец!\", '
@@ -52,18 +52,18 @@ DIALOG_EN: Dict[str, str] ={
         'lr': 'which side of the head is acking?',
         'alcohol': 'Did you drink alcohol yesterday?',
         'pres_yn': 'Can you measure your blood pressure now?',
-        'press_dat': 'Please, enter the results\n\n'
+        'press_dat': 'Please, enter the results in the format systolic/diastolyc (e.g. 120/80) \n\n'
                     'NB! Result may be strongly altered if your technique is uncorrect, '
                     'you can look at the guide below',
         'instr': 'Before the procedure:\n'
-                 'Don\'t eat or drink anything 30 minutes before you take your blood pressure\n'
-                 'Empty your bladder \n'
-                 'Sit in a comfortable chair with your back supported, feet on the floor '
+                 '✓ Don\'t eat or drink anything 30 minutes before you take your blood pressure\n'
+                 '✓ Empty your bladder \n'
+                 '✓ Sit in a comfortable chair with your back supported, feet on the floor '
                  'and no crossed limbs for at least 5 minutes\n'
-                 'Rest your arm with the cuff on a table at chest height.\n'
-                 'Make sure the blood pressure cuff is snug but not too tight.'
-                 'The cuff should be against your bare skin, not over clothing.'
-                 'Do not talk while your blood pressure is being measured.'
+                 '✓ Rest your arm with the cuff on a table at chest height.\n'
+                 '✓ Make sure the blood pressure cuff is snug but not too tight.\n'
+                 '✓ The cuff should be against your bare skin, not over clothing.\n'
+                 '✓ Do not talk while your blood pressure is being measured.\n\n'
                  'Repeat procedure 3 times with the interval of 1-2 minutes',
         'fever': 'Do you have a fever?',
         'sleep': 'From 1 to 5 estimate how did you sleep today, where 5 is \"I slept like a baby\"'
@@ -88,16 +88,16 @@ DIALOG_FR: Dict[str,str] = {
         'lr': 'Quelle cote de tet est plus mal?',
         'alcohol': 'Est-ce que vous avez bu l\'alcool hier?',
         'pres_yn': 'Est ce que vous avez la moyenne de mesurer votre tension artérielle?',
-        'press_dat': 'entrez le résultat.\n\n'
+        'press_dat': 'entrez le résultat en format systolic/diastolyc (e.g. 120/80) \n\n'
              'Attention! La technique de mesure influence beaucoup sur le résultat! Regardez l\'instruction en bas',
-        'instr': 'Pendant les 30 minutes avant la mesure, ne faites pas d\'exercice physique, ne fumez pas, '
-                 'évitez de manger et ne consommez pas de caféine.\n'
-                 'Pour prendre votre tension artérielle, installez-vous dans une pièce calme, à température confortable. '
-                 'Asseyez-vous et restez assis pendant 3 à 5 minutes. \n'
-                 'Votre dos est soutenu par le dossier de la chaise. '
-                 'Vos jambes ne sont pas croisées et vos pieds sont posés à plat sur le sol. '
-                 'Placez votre bras nu sur une table. Le milieu du bras est au niveau du cœur. '
-                 'Posez le brassard sur votre bras nu, en respectant le sens indiqué sur l\'appareil. '
+        'instr': '✓ Pendant les 30 minutes avant la mesure, ne faites pas d\'exercice physique, ne fumez pas, '
+                 ' évitez de manger et ne consommez pas de caféine.\n'
+                 '✓ Pour prendre votre tension artérielle, installez-vous dans une pièce calme, à température confortable. '
+                 '✓ Asseyez-vous et restez assis pendant 3 à 5 minutes. \n'
+                 '✓ Votre dos est soutenu par le dossier de la chaise. '
+                 'Vos jambes ne sont pas croisées et vos pieds sont posés à plat sur le sol. \n'
+                 '✓ Placez votre bras nu sur une table. Le milieu du bras est au niveau du cœur. \n'
+                 '✓ Posez le brassard sur votre bras nu, en respectant le sens indiqué sur l\'appareil. \n\n'
                  'Réaliser 3 mesures espacées d\'une à deux minutes',
         'fever':'Est-ce que vous avez une fièvre ? ',
         'sleep': 'Entre 1 et 5, évaluez comment vous avez dormi, ou 5 - \"J\'ai dormi comme un bebe!\" et 1 - \"Je n\'ai pas du tout dormi.\"',
