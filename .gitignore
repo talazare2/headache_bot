@@ -4,3 +4,4 @@ tg_bot_template/.env
 .vscode/
 venv/
 __pycache__/
+.cache.sqlite

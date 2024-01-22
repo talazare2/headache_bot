@@ -14,6 +14,7 @@ from keybords.keyboard import yes_no_kb, loc_kb
 from config_data.paths import path_to_img
 from database.fsm import usr_dict, FSMFillForm
 from filters.filters import FilterAD
+from external.weather_api import meteo_api
 
 
 #Initialize router
@@ -212,4 +213,6 @@ async def process_sleep_press(callback: CallbackQuery, state: FSMContext):
 
 @router.message(StateFilter(FSMFillForm.fill_meteo))
 async def process_location(message: Message, state: FSMContext):
-    print(message.location)
+    meteo_text = DIALOG[lang]['met_true']
+    meteo_text += meteo_api(message.location.latitude, message.location.longitude, lang)
+    await message.answer(text=meteo_text)

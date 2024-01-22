@@ -1,24 +1,63 @@
 import openmeteo_requests
 
 import requests_cache
-import pandas as pd
 from retry_requests import retry
 
-def feels_like(responses):
-    response = responses[0]
-    print(response)
+from external.weather_lexicon import WEATHER_LEX
 
+def form_meteo(daily_dict, lang):
+    line_temp_max = WEATHER_LEX[lang]['t_max'] + ': ' + str(daily_dict['apparent_temperature_max'])
+    line_temp_min = WEATHER_LEX[lang]['t_min'] + ': ' + str(daily_dict['apparent_temperature_min'])
+    if daily_dict['weather_code'] < 50:
+        line_precip = WEATHER_LEX[lang]['precip_low']
+    elif daily_dict['weather_code'] < 62:
+        line_precip = WEATHER_LEX[lang]['precip_high']
+    elif (daily_dict['weather_code'] < 67) or (79 < daily_dict['weather_code'] < 83):
+        line_precip = WEATHER_LEX[lang]['rain']
+    elif (daily_dict['weather_code'] < 80) or (daily_dict['weather_code'] in [85, 86]):
+        line_precip = WEATHER_LEX[lang]['snow']
+    elif daily_dict['weather_code'] > 90:
+        line_precip = WEATHER_LEX[lang]['storm']
+    wind = daily_dict['wind_speed_10m_max']
+    line_wind = ''
+    if wind < 20:
+        line_wind += WEATHER_LEX[lang]['calm'] 
+    elif wind < 33:
+        line_wind += WEATHER_LEX[lang]['moderate'] 
+    else:
+        line_wind += WEATHER_LEX[lang]['windy'] 
+    list_azim =[i/10 for i in list(range(225, 3600, 450))]
+    wind_dir = daily_dict['wind_direction_10m_dominant']
+    if (list_azim[-1] <= wind_dir < 360) or (0 <= wind_dir < list_azim[0]):
+        line_wind += WEATHER_LEX[lang]['north']
+    elif list_azim[0] <= wind_dir < list_azim[1]:
+        line_wind += WEATHER_LEX[lang]['n-est']
+    elif list_azim[1] <= wind_dir < list_azim[2]:
+        line_wind += WEATHER_LEX[lang]['est']
+    elif list_azim[2] <= wind_dir < list_azim[3]:
+        line_wind += WEATHER_LEX[lang]['s-est']
+    elif list_azim[3] <= wind_dir < list_azim[4]:
+        line_wind += WEATHER_LEX[lang]['sud']
+    elif list_azim[4] <= wind_dir < list_azim[5]:
+        line_wind += WEATHER_LEX[lang]['s-west']
+    elif list_azim[5] <= wind_dir < list_azim[6]:
+        line_wind += WEATHER_LEX[lang]['west']    
+    elif list_azim[6] <= wind_dir < list_azim[7]:
+        line_wind += WEATHER_LEX[lang]['n-west']
+    output = line_temp_max + '\n' + line_temp_min + '\n' + \
+             line_precip + '\n' + line_wind
+    print(output)
+    return output
 
-
-
-def meteo(lat, long):
+    
+def meteo_api(lat, long, lang):
+    print('inside meteo')
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
     retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
     openmeteo = openmeteo_requests.Client(session = retry_session)
     url = "https://api.open-meteo.com/v1/forecast"
-    temp_list = ["apparent_temperature_max", "apparent_temperature_min",
-                 "precipitation_probability_mean", "weather_code",
+    temp_list = ["apparent_temperature_max", "apparent_temperature_min","weather_code",
                  "wind_speed_10m_max", "wind_direction_10m_dominant"]
     params = {
         "latitude": lat,
@@ -28,7 +67,9 @@ def meteo(lat, long):
 	    "forecast_days": 1
     }
     responses = openmeteo.weather_api(url, params=params)
-    output_weather = feels_like(responses)
-    return output_weather
-
-meteo(43.75, 5.88)
+    print('got response')
+    response = responses[0].Daily()
+    daily_dict = {}
+    for i in range(len(temp_list)):
+        daily_dict[temp_list[i]] = round(response.Variables(i).ValuesAsNumpy()[0], 2)
+    return form_meteo(daily_dict, lang)

@@ -33,7 +33,7 @@ DIALOG_RU: Dict[str, str] ={
                  ' давление как-то влияют на состояние человека. Тем не менее жара,' 
                  ' или сильный холод однозначно могут влиять на ваше самочувствия.' 
                  'Пожалуйста, разрешите мне определить ваше местоположение, а я посмотрю какая у вас там погода',
-        'met_true': 'Данная информация о погоде верна? ',
+        'met_true': 'Данная информация о погоде верна? \n',
         'met_false': 'Пожалуйста, опишите сегодняшнюю погоду в формате: температура воздуха(в градусах Цельсия),'
                      ' дождливо/солнечно, ветренно/спокойно, жарко/морозно',
         'add':' Здесь вы можете добавить любую дополнительную информацию о вашем состоянии, иначе \"-\"',
@@ -71,7 +71,7 @@ DIALOG_EN: Dict[str, str] ={
         'meteo': 'There is no evidence that solar activity or athmospherical pressure '
                  'can affect your health state but heat or cold surely can. Please let me geolocalize your device'
                  ' so I can look at the meteo and see if there are any correlation with your headache',
-        'met_true': 'Is this information correct?',
+        'met_true': 'Is this information correct?\n',
         'met_false': 'Please write your meteo in the format: temperature deg C, rainy/sunny, windy/calm, feels hot/feels freezy',
         'add': 'Here you can add anything you want about general condions or some notes you consider important, otherwise \"-\"',
         'bye': 'Ok! Thank you for your time! I noted all information to prepare end-of-week statistics.'
@@ -103,7 +103,7 @@ DIALOG_FR: Dict[str,str] = {
         'sleep': 'Entre 1 et 5, évaluez comment vous avez dormi, ou 5 - \"J\'ai dormi comme un bebe!\" et 1 - \"Je n\'ai pas du tout dormi.\"',
         'meteo': 'Il n\'y a aucune preuve que l\'activité solaire/géomagnétique ou la pression atmosphérique puisse affecter votre santé. '
         'Par contre vous pouvez être sensible au chaleur ou au froid. Permettez-moi vous geolocaliser, je regardarai votre meteo.',
-        'met_true': 'Est-ce que c\'est correct?',
+        'met_true': 'Est-ce que c\'est correct?\n',
         'met_false': 'Veuillez décrire la météo du jour au format: température de l\'air (en degrés Celsius),'
                      ' pluvieux/ensoleillé, venteux/calme, chaud/gelé',
         'add': 'Ici vous pouvez ajouter tout l\'information additionel concernant votre etat ou \"-\".',
