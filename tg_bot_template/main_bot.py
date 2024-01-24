@@ -1,6 +1,12 @@
 import asyncio
 import logging
 
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+
+from datetime import datetime
+from time_mes import send_message_cron
+
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import RedisStorage, Redis
 from config_data.config import Config, load_config
@@ -31,13 +37,19 @@ async def main():
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp = Dispatcher(storage=storage)
 
+    #scheduled message
+    scheduler = AsyncIOScheduler(timezone="Europe/Moscow")
+    scheduler.add_job(send_message_cron, CronTrigger(hour="12, 18", minute="0", second="0"),
+                       start_date=datetime.now(), kwargs={'bot': bot})
+    scheduler.start()
     # Register router
     dp.include_router(user_handlers.router)
+    # dp.include_router(other_handlers.router)
+
 
     # Skip update, launch polling
     await bot.delete_webhook(drop_pending_updates=False)
     await dp.start_polling(bot, allowed_updates=[])
-
 
 
 if __name__ == '__main__':

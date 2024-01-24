@@ -6,48 +6,67 @@ from retry_requests import retry
 from external.weather_lexicon import WEATHER_LEX
 
 def form_meteo(daily_dict, lang):
+    met_code_list = []
     line_temp_max = WEATHER_LEX[lang]['t_max'] + ': ' + str(daily_dict['apparent_temperature_max'])
     line_temp_min = WEATHER_LEX[lang]['t_min'] + ': ' + str(daily_dict['apparent_temperature_min'])
+    met_code_list.append(daily_dict['apparent_temperature_max'])
+    met_code_list.append(daily_dict['apparent_temperature_min'])
     if daily_dict['weather_code'] < 50:
         line_precip = WEATHER_LEX[lang]['precip_low']
+        met_code_list.append(0)
     elif daily_dict['weather_code'] < 62:
         line_precip = WEATHER_LEX[lang]['precip_high']
+        met_code_list.append(1)
     elif (daily_dict['weather_code'] < 67) or (79 < daily_dict['weather_code'] < 83):
         line_precip = WEATHER_LEX[lang]['rain']
+        met_code_list.append(2)
     elif (daily_dict['weather_code'] < 80) or (daily_dict['weather_code'] in [85, 86]):
         line_precip = WEATHER_LEX[lang]['snow']
+        met_code_list.append(3)
     elif daily_dict['weather_code'] > 90:
         line_precip = WEATHER_LEX[lang]['storm']
+        met_code_list.append(4)
     wind = daily_dict['wind_speed_10m_max']
     line_wind = ''
     if wind < 20:
         line_wind += WEATHER_LEX[lang]['calm'] 
+        met_code_list.append(0)
     elif wind < 33:
         line_wind += WEATHER_LEX[lang]['moderate'] 
+        met_code_list.append(1)
     else:
         line_wind += WEATHER_LEX[lang]['windy'] 
+        met_code_list.append(2)
     list_azim =[i/10 for i in list(range(225, 3600, 450))]
     wind_dir = daily_dict['wind_direction_10m_dominant']
     if (list_azim[-1] <= wind_dir < 360) or (0 <= wind_dir < list_azim[0]):
         line_wind += WEATHER_LEX[lang]['north']
+        met_code_list.append(0)
     elif list_azim[0] <= wind_dir < list_azim[1]:
         line_wind += WEATHER_LEX[lang]['n-est']
+        met_code_list.append(1)
     elif list_azim[1] <= wind_dir < list_azim[2]:
         line_wind += WEATHER_LEX[lang]['est']
+        met_code_list.append(2)
     elif list_azim[2] <= wind_dir < list_azim[3]:
         line_wind += WEATHER_LEX[lang]['s-est']
+        met_code_list.append(3)
     elif list_azim[3] <= wind_dir < list_azim[4]:
         line_wind += WEATHER_LEX[lang]['sud']
+        met_code_list.append(4)
     elif list_azim[4] <= wind_dir < list_azim[5]:
         line_wind += WEATHER_LEX[lang]['s-west']
+        met_code_list.append(5)
     elif list_azim[5] <= wind_dir < list_azim[6]:
-        line_wind += WEATHER_LEX[lang]['west']    
+        line_wind += WEATHER_LEX[lang]['west']  
+        met_code_list.append(6)  
     elif list_azim[6] <= wind_dir < list_azim[7]:
         line_wind += WEATHER_LEX[lang]['n-west']
+        met_code_list.append(7)
     output = line_temp_max + '\n' + line_temp_min + '\n' + \
              line_precip + '\n' + line_wind
     print(output)
-    return output
+    return output, met_code_list
 
     
 def meteo_api(lat, long, lang):

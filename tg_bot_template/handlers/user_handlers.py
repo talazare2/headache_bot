@@ -70,8 +70,8 @@ async def process_lang_press(callback: CallbackQuery, state: FSMContext):
         await callback.answer(text=COMMON['set_fr'], show_alert=True)
     keyboard = kb(2, LEXICON[lang]['begin'], LEXICON[lang]['stop'])
     ident = callback.from_user.id
-    await state.update_data(id = ident)
-    await state.update_data(language = lang)
+    await state.update_data(user_id = ident)
+    await state.update_data(lang = lang)
     await state.update_data(date = str(date.today()))
     await callback.message.answer(text=DIALOG[lang]['intro'], reply_markup=keyboard)
     await callback.answer()
@@ -149,7 +149,6 @@ async def process_lr_press(callback: CallbackQuery, state: FSMContext):
 # This handler ask if you can measure blood pressure
 @router.callback_query(StateFilter(FSMFillForm.fill_alc))
 async def process_alc_press(callback: CallbackQuery, state: FSMContext):
-    print(f'here!! {callback.data}')
     if callback.data == LEXICON[lang]['yes']:
         await state.update_data(alc = 1)
     else:
@@ -162,7 +161,6 @@ async def process_alc_press(callback: CallbackQuery, state: FSMContext):
 # This handler ask to enter blood pressure measuremnts or give you instructions
 @router.message(StateFilter(FSMFillForm.fill_presyn), F.text == LEXICON[lang]['yep'])
 async def process_pr_y_n_press(message: Message, state: FSMContext):
-    print(f'here!! {message.text}')
     keyboard = kb(1, LEXICON[lang]['instr'])
     await message.answer(text=DIALOG[lang]['press_dat'], reply_markup=keyboard)
     await state.set_state(FSMFillForm.fill_press)
@@ -196,6 +194,12 @@ async def process_ad_press_bad(message: Message, state: FSMContext):
 # This handler asks how did you sleep
 @router.callback_query(StateFilter(FSMFillForm.fill_fev))
 async def process_fev_press(callback: CallbackQuery, state: FSMContext):
+    if callback.data == LEXICON[lang]['le372']:
+        await state.update_data(fever = 0)   
+    elif callback.data == LEXICON[lang]['le385']:
+        await state.update_data(fever = 1)
+    else:
+        await state.update_data(fever = 2)
     keyboard = kb(3, BUTTONS['btn0'], BUTTONS['btn1'], BUTTONS['btn2'],\
                   BUTTONS['btn3'],BUTTONS['btn4'],BUTTONS['btn5'])    
     await callback.message.answer(text=DIALOG[lang]['sleep'], reply_markup=keyboard)
@@ -206,6 +210,7 @@ async def process_fev_press(callback: CallbackQuery, state: FSMContext):
 # This handler asks to provide geolocalisation
 @router.callback_query(StateFilter(FSMFillForm.fill_sleep))
 async def process_sleep_press(callback: CallbackQuery, state: FSMContext):
+    await state.update_data(sleep = callback.data)
     await callback.message.answer(text=DIALOG[lang]['meteo'], reply_markup=loc_kb(lang))
     await callback.answer()
     await state.set_state(FSMFillForm.fill_meteo)
@@ -213,6 +218,13 @@ async def process_sleep_press(callback: CallbackQuery, state: FSMContext):
 
 @router.message(StateFilter(FSMFillForm.fill_meteo))
 async def process_location(message: Message, state: FSMContext):
+    api_text, met_code_list =  meteo_api(message.location.latitude, message.location.longitude, lang)
+    await state.update_data(t_max = met_code_list[0])
+    await state.update_data(t_min = met_code_list[1])
+    await state.update_data(precip = met_code_list[2])
+    await state.update_data(wind_force = met_code_list[3])
+    await state.update_data(wind_dir = met_code_list[4])
     meteo_text = DIALOG[lang]['met_true']
-    meteo_text += meteo_api(message.location.latitude, message.location.longitude, lang)
+    meteo_text += api_text
     await message.answer(text=meteo_text)
+
