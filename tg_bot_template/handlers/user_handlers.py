@@ -216,6 +216,7 @@ async def process_sleep_press(callback: CallbackQuery, state: FSMContext):
     await state.set_state(FSMFillForm.fill_meteo)
 
 
+
 @router.message(StateFilter(FSMFillForm.fill_meteo))
 async def process_location(message: Message, state: FSMContext):
     api_text, met_code_list =  meteo_api(message.location.latitude, message.location.longitude, lang)

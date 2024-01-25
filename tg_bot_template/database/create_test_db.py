@@ -18,7 +18,7 @@ columns = [
     'halvl', 'loc', 'side', 'alc', 
     'ad', 'fever', 'sleep', 
     't_max', 't_min', 'precip', 
-    'wind_force', 'wind_dir' 
+    'wind_force', 'wind_dir', 'wind_dir_ex'
     ]
 
 df_test = pd.DataFrame(columns = columns)
@@ -70,6 +70,7 @@ for i in range(PERIOD):
     row_dict['precip'] = rd.randrange(5)
     row_dict['wind_force'] = rd.randrange(3) 
     row_dict['wind_dir'] = rd.randrange(8)
+    row_dict['wind_dir_ex'] = rd.randrange(360)
     df_test = pd.concat([df_test,pd.DataFrame([row_dict])], ignore_index=True)
-    
+
 df_test.to_csv(f'{path_to_db}test_db.csv', index=False)

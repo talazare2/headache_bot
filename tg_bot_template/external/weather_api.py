@@ -4,6 +4,7 @@ import requests_cache
 from retry_requests import retry
 
 from external.weather_lexicon import WEATHER_LEX
+#from weather_lexicon import WEATHER_LEX
 
 def form_meteo(daily_dict, lang):
     met_code_list = []
@@ -39,33 +40,26 @@ def form_meteo(daily_dict, lang):
         met_code_list.append(2)
     list_azim =[i/10 for i in list(range(225, 3600, 450))]
     wind_dir = daily_dict['wind_direction_10m_dominant']
+    met_code_list.append(wind_dir)
     if (list_azim[-1] <= wind_dir < 360) or (0 <= wind_dir < list_azim[0]):
         line_wind += WEATHER_LEX[lang]['north']
-        met_code_list.append(0)
     elif list_azim[0] <= wind_dir < list_azim[1]:
-        line_wind += WEATHER_LEX[lang]['n-est']
-        met_code_list.append(1)
+        line_wind += WEATHER_LEX[lang]['n-west']
     elif list_azim[1] <= wind_dir < list_azim[2]:
-        line_wind += WEATHER_LEX[lang]['est']
-        met_code_list.append(2)
+        line_wind += WEATHER_LEX[lang]['west']
     elif list_azim[2] <= wind_dir < list_azim[3]:
-        line_wind += WEATHER_LEX[lang]['s-est']
-        met_code_list.append(3)
+        line_wind += WEATHER_LEX[lang]['s-west']
     elif list_azim[3] <= wind_dir < list_azim[4]:
         line_wind += WEATHER_LEX[lang]['sud']
-        met_code_list.append(4)
     elif list_azim[4] <= wind_dir < list_azim[5]:
-        line_wind += WEATHER_LEX[lang]['s-west']
-        met_code_list.append(5)
+        line_wind += WEATHER_LEX[lang]['s-est']
     elif list_azim[5] <= wind_dir < list_azim[6]:
-        line_wind += WEATHER_LEX[lang]['west']  
-        met_code_list.append(6)  
+        line_wind += WEATHER_LEX[lang]['est']
     elif list_azim[6] <= wind_dir < list_azim[7]:
-        line_wind += WEATHER_LEX[lang]['n-west']
-        met_code_list.append(7)
+        line_wind += WEATHER_LEX[lang]['n-est']
     output = line_temp_max + '\n' + line_temp_min + '\n' + \
              line_precip + '\n' + line_wind
-    print(output)
+    print(output, met_code_list[-1],daily_dict['wind_speed_10m_max'])
     return output, met_code_list
 
     
