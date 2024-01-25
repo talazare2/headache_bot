@@ -5,12 +5,12 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
 from datetime import datetime
-from time_mes import send_message_cron
+from handlers.scheduler import send_schedule
 
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import RedisStorage, Redis
 from config_data.config import Config, load_config
-from handlers import user_handlers
+from handlers import user_handlers, other_handlers
 from config_data.paths import path_to_env
 #logging initialization
 logger = logging.getLogger(__name__)
@@ -39,18 +39,18 @@ async def main():
 
     #scheduled message
     scheduler = AsyncIOScheduler(timezone="Europe/Moscow")
-    scheduler.add_job(send_message_cron, CronTrigger(hour="12, 18", minute="0", second="0"),
+    scheduler.add_job(send_schedule, CronTrigger(hour="12, 18", minute="0", second="0"),
                        start_date=datetime.now(), kwargs={'bot': bot})
     scheduler.start()
     # Register router
     dp.include_router(user_handlers.router)
-    # dp.include_router(other_handlers.router)
+    dp.include_router(other_handlers.router)
+    
 
 
     # Skip update, launch polling
     await bot.delete_webhook(drop_pending_updates=False)
     await dp.start_polling(bot, allowed_updates=[])
-
 
 if __name__ == '__main__':
     asyncio.run(main())

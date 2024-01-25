@@ -27,18 +27,17 @@ DIALOG_RU: Dict[str, str] ={
                  '✓ Не разговаривайте во время процедуры.\n\n'
                  'Повторите процедуру три раза с интервалом в одну-две минуты.',
         'fever': 'Есть ли у вас повышенная температура?',
-        'sleep': 'От 1 до 5 оцените как вы спали сегодня ночью, где 5 - \"Я спал как младенец!\", '
-                 'а 1 - \"Я вообще не спал\"',
+        'sleep': 'От 0 до 5 оцените как вы спали сегодня ночью, где 5 - \"Я спал как младенец!\", '
+                 'а 0 - \"Я вообще не спал\"',
         'meteo': 'Нет никаких свидетельств о том, что солнечная/геомагнитная активность или атмосферное'
                  ' давление как-то влияют на состояние человека. Тем не менее жара,' 
                  ' или сильный холод однозначно могут влиять на ваше самочувствия.' 
                  'Пожалуйста, разрешите мне определить ваше местоположение, а я посмотрю какая у вас там погода',
-        'met_true': 'Данная информация о погоде верна? \n',
+        'met_true': 'Сведения о погоде в вашем регионе: \n',
         'met_false': 'Пожалуйста, опишите сегодняшнюю погоду в формате: температура воздуха(в градусах Цельсия),'
                      ' дождливо/солнечно, ветренно/спокойно, жарко/морозно',
         'add':' Здесь вы можете добавить любую дополнительную информацию о вашем состоянии, иначе \"-\"',
         'bye': 'Большое спасибо за Ваше время! Я сохраню вашу информацию и подготовлю статистический расчет!' 
-               'Все предоставленные данные доступны только вам и не могут быть переданы третьим лицам.'
        
 }
 
@@ -66,12 +65,12 @@ DIALOG_EN: Dict[str, str] ={
                  '✓ Do not talk while your blood pressure is being measured.\n\n'
                  'Repeat procedure 3 times with the interval of 1-2 minutes',
         'fever': 'Do you have a fever?',
-        'sleep': 'From 1 to 5 estimate how did you sleep today, where 5 is \"I slept like a baby\"'
-                 ' and 1 is \"I didn\'t sleep\"',
+        'sleep': 'From 0 to 5 estimate how did you sleep today, where 5 is \"I slept like a baby\"'
+                 ' and 0 is \"I didn\'t sleep\"',
         'meteo': 'There is no evidence that solar activity or athmospherical pressure '
                  'can affect your health state but heat or cold surely can. Please let me geolocalize your device'
                  ' so I can look at the meteo and see if there are any correlation with your headache',
-        'met_true': 'Is this information correct?\n',
+        'met_true': 'Today\'s forecast for you region:\n',
         'met_false': 'Please write your meteo in the format: temperature deg C, rainy/sunny, windy/calm, feels hot/feels freezy',
         'add': 'Here you can add anything you want about general condions or some notes you consider important, otherwise \"-\"',
         'bye': 'Ok! Thank you for your time! I noted all information to prepare end-of-week statistics.'
@@ -100,10 +99,10 @@ DIALOG_FR: Dict[str,str] = {
                  '✓ Posez le brassard sur votre bras nu, en respectant le sens indiqué sur l\'appareil. \n\n'
                  'Réaliser 3 mesures espacées d\'une à deux minutes',
         'fever':'Est-ce que vous avez une fièvre ? ',
-        'sleep': 'Entre 1 et 5, évaluez comment vous avez dormi, ou 5 - \"J\'ai dormi comme un bebe!\" et 1 - \"Je n\'ai pas du tout dormi.\"',
+        'sleep': 'Entre 0 et 5, évaluez comment vous avez dormi, ou 5 - \"J\'ai dormi comme un bebe!\" et 0 - \"Je n\'ai pas du tout dormi.\"',
         'meteo': 'Il n\'y a aucune preuve que l\'activité solaire/géomagnétique ou la pression atmosphérique puisse affecter votre santé. '
         'Par contre vous pouvez être sensible au chaleur ou au froid. Permettez-moi vous geolocaliser, je regardarai votre meteo.',
-        'met_true': 'Est-ce que c\'est correct?\n',
+        'met_true': 'Voila!Le meteo pour aujourd\'hui:\n',
         'met_false': 'Veuillez décrire la météo du jour au format: température de l\'air (en degrés Celsius),'
                      ' pluvieux/ensoleillé, venteux/calme, chaud/gelé',
         'add': 'Ici vous pouvez ajouter tout l\'information additionel concernant votre etat ou \"-\".',

@@ -11,4 +11,11 @@ COMMON: Dict[str, str] = {
     'set_ru': 'Выбран русский язык',
     'set_en': 'English was chosen',
     'set_fr': 'Vous avez sélectionnez français',
+    'go': 'Пришло время ежедневного опроса! Чтобы начать опрос нажмите /go. \n\n'
+              'It\'s time for questionnary! To start press /go.\n\n' 
+              'C\'est l\'heure de questionnaire! Pour commencer сliquez sur /go \n\n',
+    '?': 'Вы написали что-то невразумительное, нажмите кнопку!\n'
+          'You wrote something unreadable, kust push the button!\n'
+          'Vous avez ecrit n\'importe quoi! Cliquez sur le bouton!'
+    
 }

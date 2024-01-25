@@ -2,7 +2,7 @@ from typing import Dict
 
 
 LEXICON_EN: Dict[str, str] = {
-    '/help': 'Just type /start',
+    '/help': 'At any unclear situation just type /start',
     '/abort': 'You cancelled your headache-check for today, see you tomorrow!',
     'begin': 'Let\'s start!',
     'stop': 'Not today!',
@@ -21,7 +21,7 @@ LEXICON_EN: Dict[str, str] = {
     'share_loc': 'Share position'}
 
 LEXICON_RU: Dict[str, str] = {
-    '/help': 'просто напишите /start',
+    '/help': 'В любой непонятной ситуации просто напишите /start',
     '/abort': 'Вы прервали заполнение анкеты, до свидания!', 
     'begin': 'Давайте начнем!',
     'stop': 'Не сегодня!',
@@ -40,7 +40,7 @@ LEXICON_RU: Dict[str, str] = {
     'share_loc': 'Поделиться геопозицией'}
 
 LEXICON_FR: Dict[str, str] = {
-    '/help': 'Imprimez /start',
+    '/help': 'Si vous ne sais pas quoi faire, imprimez /start',
     '/abort': 'Vous aves arrete votre mal-de-tete check pour aujoutd\'hui. Au revoir!',
     'begin': 'Allez y!',
     'stop': 'Prochaine fois!',

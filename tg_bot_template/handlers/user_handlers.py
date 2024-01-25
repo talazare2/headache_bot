@@ -15,6 +15,7 @@ from config_data.paths import path_to_img
 from database.fsm import usr_dict, FSMFillForm
 from filters.filters import FilterAD
 from external.weather_api import meteo_api
+from database.db_creator import create_df
 
 
 #Initialize router
@@ -23,13 +24,17 @@ router = Router()
 # Set default language
 lang = 'ru'
 
-# This handler reacts to /start
+# This handler reacts to /start or /go
+@router.message(Command(commands='go'))
 @router.message(CommandStart())
 async def process_start_command(message: Message, state: FSMContext):
     await state.clear()
     keyboard = kb(3, COMMON['en'], COMMON['ru'], COMMON['fr'])
     await message.answer(text=COMMON['/start'], reply_markup=keyboard)
-    await state.set_state(FSMFillForm.fill_lang)
+    if message.text == '/start':
+        await state.set_state(FSMFillForm.fill_lang)
+    else:
+        await state.set_state(FSMFillForm.fill_go)
 
 
 # This handler reacts to /abort
@@ -41,7 +46,8 @@ async def process_stop_command(message: Message):
 # This handler reacts to /abort, store data to db and turn off FSM
 @router.message(Command(commands='abort'), ~StateFilter(default_state))
 async def process_stop_command(message: Message,  state: FSMContext):
-    usr_dict[message.from_user.id] = await state.get_data()
+    global usr_dict
+    usr_dict = await state.get_data()
     await message.answer(text=LEXICON[lang]['/abort'])
     await state.clear()
 
@@ -78,6 +84,28 @@ async def process_lang_press(callback: CallbackQuery, state: FSMContext):
     await state.set_state(FSMFillForm.fill_start)
 
 
+# This handler allows to choose language when go pressed
+@router.callback_query(StateFilter(FSMFillForm.fill_go), 
+                       F.data.in_([COMMON['ru'],
+                                   COMMON['en'],
+                                   COMMON['fr']]))
+async def process_lang_press_go(callback: CallbackQuery, state: FSMContext):
+    global lang 
+    if callback.data == COMMON['ru']:
+        lang = 'ru'
+        await callback.answer(text=COMMON['set_ru'], show_alert=True)
+    elif callback.data == COMMON['en']:
+        lang = 'en'
+        await callback.answer(text=COMMON['set_en'], show_alert=True)
+    elif callback.data == COMMON['fr']:
+        lang = 'fr'
+        await callback.answer(text=COMMON['set_fr'], show_alert=True)
+    ident = callback.from_user.id
+    await state.update_data(user_id = ident)
+    await state.update_data(lang = lang)
+    await state.update_data(date = str(date.today()))
+    await state.set_state(FSMFillForm.fill_go_2)
+
 # This handler for exit if one doesn't want to do questionnary
 @router.callback_query(StateFilter(FSMFillForm.fill_start),
                        F.data.in_([LEXICON['ru']['stop'],
@@ -90,6 +118,7 @@ async def process_stop_press(callback: CallbackQuery, state: FSMContext):
 
 
 # This handler ask headache level
+@router.callback_query(StateFilter(FSMFillForm.fill_go_2))
 @router.callback_query(StateFilter(FSMFillForm.fill_start), 
                        F.data.in_([LEXICON['ru']['begin'],
                                    LEXICON['en']['begin'],
@@ -106,7 +135,6 @@ async def process_begin_press(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(StateFilter(FSMFillForm.fill_lvl),
                        F.data != BUTTONS['btn0'])
 async def process_lvl_press(callback: CallbackQuery,  state: FSMContext):
-    print('process_lvl_press', callback.data)
     await state.update_data(halvl = callback.data)
     keyboard = kb(3, BUTTONS['btn1'], BUTTONS['btn2'], BUTTONS['btn3'],\
                  BUTTONS['btn4'],BUTTONS['btn5'],BUTTONS['btn6'])
@@ -119,7 +147,6 @@ async def process_lvl_press(callback: CallbackQuery,  state: FSMContext):
 # This handler ask if it's left or right side
 @router.callback_query(StateFilter(FSMFillForm.fill_loc))
 async def process_loc_press(callback: CallbackQuery, state: FSMContext):
-    print('process_loc_press', callback.data)
     await state.update_data(loc = callback.data)
     keyboard = kb(3, LEXICON[lang]['left'], LEXICON[lang]['right'], LEXICON[lang]['centr'])
     await callback.message.answer(text=DIALOG[lang]['lr'], reply_markup=keyboard)
@@ -133,7 +160,6 @@ async def process_loc_press(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(StateFilter(FSMFillForm.fill_lvl),
                        F.data == BUTTONS['btn0'])
 async def process_lr_press(callback: CallbackQuery, state: FSMContext):
-    print('process_lr_press', callback.data)
     if callback.data == BUTTONS['btn0']:
         await state.update_data(halvl = callback.data)
         await state.update_data(loc = 'NaN')
@@ -160,6 +186,7 @@ async def process_alc_press(callback: CallbackQuery, state: FSMContext):
 
 # This handler ask to enter blood pressure measuremnts or give you instructions
 @router.message(StateFilter(FSMFillForm.fill_presyn), F.text == LEXICON[lang]['yep'])
+#@router.message(StateFilter(FSMFillForm.fill_presyn))
 async def process_pr_y_n_press(message: Message, state: FSMContext):
     keyboard = kb(1, LEXICON[lang]['instr'])
     await message.answer(text=DIALOG[lang]['press_dat'], reply_markup=keyboard)
@@ -219,13 +246,18 @@ async def process_sleep_press(callback: CallbackQuery, state: FSMContext):
 
 @router.message(StateFilter(FSMFillForm.fill_meteo))
 async def process_location(message: Message, state: FSMContext):
+    global usr_dict
     api_text, met_code_list =  meteo_api(message.location.latitude, message.location.longitude, lang)
-    await state.update_data(t_max = met_code_list[0])
-    await state.update_data(t_min = met_code_list[1])
-    await state.update_data(precip = met_code_list[2])
-    await state.update_data(wind_force = met_code_list[3])
-    await state.update_data(wind_dir = met_code_list[4])
+    await state.update_data(t_max = str(met_code_list[0]))
+    await state.update_data(t_min = str(met_code_list[1]))
+    await state.update_data(precip = str(met_code_list[2]))
+    await state.update_data(wind_force = str(met_code_list[3]))
+    await state.update_data(wind_dir = str(met_code_list[4]))
     meteo_text = DIALOG[lang]['met_true']
     meteo_text += api_text
     await message.answer(text=meteo_text)
-
+    await message.answer(text=DIALOG[lang]['bye'])
+    usr_dict = await state.get_data()
+    create_df(usr_dict)
+    await state.clear()
+    

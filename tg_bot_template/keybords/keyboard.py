@@ -41,7 +41,7 @@ def yes_no_kb(lang):
     # Добавляем кнопки в билдер с аргументом width=2
     yes_no_kb_builder.row(button_yes, button_no, width=2)
 
-     # Создаем клавиатуру с кнопками "Давай!" и "Не хочу!"
+     # Создаем клавиатуру с кнопками "да!" и "нет!"
     yes_no_kb: ReplyKeyboardMarkup = yes_no_kb_builder.as_markup(
         one_time_keyboard=True, 
         resize_keyboard=True)
@@ -55,3 +55,13 @@ def loc_kb(lang):
                   one_time_keyboard=True
     )
     return loc_kb
+
+# ------- Создаем кнопку go -------
+def go_kb():
+    button_1 = KeyboardButton(text='/go')
+    button_2 = KeyboardButton(text='/abort')
+    go_kb = ReplyKeyboardMarkup(
+        keyboard=[button_1,button_2], resize_keyboard=True, 
+                  one_time_keyboard=True
+    )
+    return go_kb

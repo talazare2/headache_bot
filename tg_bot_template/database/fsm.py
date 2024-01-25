@@ -1,7 +1,7 @@
 from typing import Dict
 from aiogram.fsm.state import State, StatesGroup
 
-usr_dict: Dict[int, Dict[str, str or int]] = {}
+usr_dict = {}
 # Cоздаем класс, наследуемый от StatesGroup, для группы состояний нашей FSM
 class FSMFillForm(StatesGroup):
     # Создаем экземпляры класса State, последовательно
@@ -9,6 +9,8 @@ class FSMFillForm(StatesGroup):
     # бот в разные моменты взаимодейтсвия с пользователем
     fill_lang = State()
     fill_start = State()
+    fill_go = State()
+    fill_go_2 = State()
     fill_lvl = State()       
     fill_loc = State()  
     fill_side = State()      
@@ -19,4 +21,3 @@ class FSMFillForm(StatesGroup):
     fill_fev = State()
     fill_sleep = State()
     fill_meteo = State()
-    fill_add = State()

@@ -14,7 +14,7 @@ os.mkdir(path_to_report, str(user_id))
 path_to_report = path_to_report + str(user_id) + '/' 
 #df = pd.read_csv(f'{path_to_report}test_db.csv')
 df = pd.read_csv(f'{path_to_db}test_db.csv')
-#df = pd.read_csv(f'{path_to_db}bot_db.csv')
+#df = pd.read_csv(f'{path_to_db}db.csv')
 
 df = df[df['user_id'] == user_id]
 
@@ -34,9 +34,13 @@ def fix_df_date(df):
     df_temp = []
     for _, row in df.iterrows():
         row['date'] = convert_date(row['date'])
-        asyst, dyast = list(map(int, row['ad'].split('/')))
-        row['asyst'] = asyst
-        row['dyast'] = dyast
+        try:
+            asyst, dyast = list(map(int, row['ad'].split('/')))
+            row['asyst'] = asyst
+            row['dyast'] = dyast
+        except:
+            row['asyst'] = 'NaN'
+            row['dyast'] = 'NaN'
         df_temp.append(row)
     df = pd.DataFrame(df_temp)
     return df

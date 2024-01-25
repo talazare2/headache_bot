@@ -59,12 +59,10 @@ def form_meteo(daily_dict, lang):
         line_wind += WEATHER_LEX[lang]['n-est']
     output = line_temp_max + '\n' + line_temp_min + '\n' + \
              line_precip + '\n' + line_wind
-    print(output, met_code_list[-1],daily_dict['wind_speed_10m_max'])
     return output, met_code_list
 
     
 def meteo_api(lat, long, lang):
-    print('inside meteo')
     # Setup the Open-Meteo API client with cache and retry on error
     cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
     retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
@@ -80,7 +78,6 @@ def meteo_api(lat, long, lang):
 	    "forecast_days": 1
     }
     responses = openmeteo.weather_api(url, params=params)
-    print('got response')
     response = responses[0].Daily()
     daily_dict = {}
     for i in range(len(temp_list)):
